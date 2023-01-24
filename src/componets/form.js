@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./form.css";
 import API from "../api/API";
 
@@ -8,6 +8,7 @@ function Form() {
   const [password, setPassword] = useState();
   const [occupation, setOccupation] = useState({});
   const [state, setState] = useState({});
+  const inputRef = useRef();
 
   // Update the selected occupation or selected state
   const [selectedOccupation, setSelectedOccupation] = useState();
@@ -58,6 +59,7 @@ function Form() {
           className="input"
           type="text"
           placeholder="Full Name"
+          ref={inputRef}
           onChange={(e) => setName(e.target.value)}
           required
         />
@@ -66,6 +68,7 @@ function Form() {
           className="input"
           type="text"
           placeholder="Email"
+          ref={inputRef}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
@@ -74,6 +77,7 @@ function Form() {
           className="input"
           type="password"
           placeholder="Enter Password"
+          ref={inputRef}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
