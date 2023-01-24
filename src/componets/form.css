@@ -1,0 +1,75 @@
+:root {
+  --font-family: "Space Grotesk", sans-serif;
+  --font-size-mobile: 0.688rem;
+  --text-transform: uppercase;
+  --font-weight: 500;
+  --white: hsl(0, 0%, 100%);
+  --light-grayish-violet: hsl(270, 3%, 87%);
+  --dark-grayish-violet: hsl(279, 6%, 55%);
+  --very-dark-violet: hsl(278, 68%, 11%);
+  --round-corners: 0.5rem;
+  --deep-purple: rgb(48 13 56);
+  --orange: #ffa900;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4.85rem;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.label {
+  font-size: var(--font-size-mobile);
+  font-family: var(--font-family);
+  text-transform: var(--text-transform);
+  font-weight: var(--font-weight);
+  color: var(--very-dark-violet);
+  letter-spacing: 0.14rem;
+  margin: 0.7rem 0.2rem 0 0.2rem;
+}
+
+.input {
+  font-size: 1rem;
+  letter-spacing: 0.03rem;
+  padding-left: 0.8rem;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  color: var(--very-dark-violet);
+  width: 20rem;
+  height: 2.7rem;
+  border-radius: var(--round-corners);
+  margin: 0.7rem 0.2rem 1rem 0.2rem;
+}
+
+.selection {
+  font-size: 1rem;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  color: var(--very-dark-violet);
+  border-radius: var(--round-corners);
+  width: 20rem;
+  height: 2.7rem;
+  padding: 0 0 0 0.8rem;
+  margin: 0.7rem 0 0 0.2rem;
+  cursor: pointer;
+}
+
+.submit-button {
+  cursor: pointer;
+  border-radius: var(--round-corners);
+  background-color: var(--orange);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  height: 3.5rem;
+  margin: 1.4rem 0.2rem 1rem 0.2rem;
+  font-size: 1rem;
+}

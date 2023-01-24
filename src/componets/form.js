@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./form.css";
 
 function Form() {
   return (
