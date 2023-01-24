@@ -48,6 +48,7 @@ function Form() {
         console.log(err);
       });
   }, []);
+
   return (
     <section className="section">
       Sign Up
@@ -81,9 +82,36 @@ function Form() {
           data-testid="occupation"
           name="occupation"
           className="selection"
-        ></select>
+          onChange={(e) => setSelectedOccupation(e.target.value)}
+        >
+          {Array.isArray(occupation)
+            ? occupation.map((occupations) => {
+                return (
+                  <option key={occupations} value={occupations}>
+                    {occupations}
+                  </option>
+                );
+              })
+            : null}
+        </select>
+
         <label className="label">State</label>
-        <select className="selection" defaultValue="default-value"></select>
+        <select
+          className="selection"
+          defaultValue="default-value"
+          onChange={(e) => setSelectedState(e.target.value)}
+        >
+          {Array.isArray(state)
+            ? state.map((states) => {
+                return (
+                  <option key={states.abbreviation} value={states.name}>
+                    {states.name}
+                  </option>
+                );
+              })
+            : null}
+        </select>
+
         <button className="submit-button" type="submit">
           Sign up
         </button>
