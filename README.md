@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+## Fetch Rewards - Frontend Take-Home Exercise
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+A frontend wep app that accepts HTTP request and returns responses based on the conditions outlined in the next section.
 
-In the project directory, you can run:
+## Technologies:
 
-### `npm start`
+- React.js - It's used for building interactive user interfaces and web applications
+- axios - is a promise-based HTTP Client for node.js and the browser
+- Jest.js - is a JavaScript testing framework designed to ensure correctness of any JavaScript codebase
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Table of Contents
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [Description](#description)
+- [Technologies](#topics)
+- [Installation](#installation)
+- [Making API calls](#making-api-calls)
+- [Running Test](#tests)
+
+## Installation
+
+Before installing this application on your local computer, ensure that you have npm or yarn installed globally on your machine.
+
+Installation:
+
+    1. Clone the repo or download the zip file to your local machine
+    2. Open repo in vscode or text editor of choice
+    3. Go to the root directory of the project
+    4. npm install
+    5. npm start
+
+## Making API calls
+
+Note: We are using Fetch Rewards API https://frontend-take-home.fetchrewards.com/form
+
+## GET API request to https://frontend-take-home.fetchrewards.com/form will return a JSON body with the following format:
+
+- {
+  "occupations": [
+  "occupation1",
+  "occupation2",
+  ...
+  ],
+  "states": [
+  {
+  "name": "Alabama",
+  "abbreviation": "AL"
+  },
+  ...
+  ]
+  }
+
+## POST API endpoint https://frontend-take-home.fetchrewards.com/form
+
+Accepts an input and select options which axios formats into a JSON Body
+
+For each call, all the inputs should contain the following:
+
+- Full Name
+- Email
+- Password
+- Select Ocuppation
+- Select State
+
+When entering your email in the input field, a warning in red will show you if you entered invalid characters (missing @ and .).
+
+Click the Sign up button and you will get a Status Code:201 for created response if all fields are provided will return a JSON body with the following format:
+
+- {
+  "name": "Michael Scott",
+  "email": "michael.scott@dundermifflinpaper.biz",
+  "password": "heyimdatemikenicetomeetme",
+  "occupation": "Alexa Impersonator",
+  "state": "Pennsylvania"
+  }
+
+## Running Test
+
+    1. Run the test file with the following command:
+    2. npm run test or npm test
+
+The test file will run the following tests:
+
+- Test to make sure all the input fields are filled
+- POST a new registration
+- GET occupation and state
 
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
