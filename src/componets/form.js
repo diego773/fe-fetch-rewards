@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./form.css";
 import API from "../api/API";
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 function Form() {
   const [name, setName] = useState();
@@ -9,8 +10,10 @@ function Form() {
   const [occupation, setOccupation] = useState({});
   const [state, setState] = useState({});
   const inputRef = useRef();
-  const [formErrors, setFormErrors] = useState({});
   const [success, setSuccess] = useState(false);
+  const [validEmail, setValidEmail] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
+  const [emailFocus, setEmailFocus] = useState(false);
 
   // Update the selected occupation or selected state
   const [selectedOccupation, setSelectedOccupation] = useState();
@@ -28,61 +31,38 @@ function Form() {
     };
 
     try {
+      if (!emailRegex.test(email)) {
+        return errorMessage;
+      }
       const response = await API.post("/form", newPost);
       setName(response.data);
       setEmail(response.data);
       setPassword(response.data);
       setOccupation(response.data);
       setState(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
-    setFormErrors(handleErrorInput());
+    setSuccess(true);
+  };
+
+  const emailInput = () => {
+    const result = emailRegex.test(email);
+    if (!result) {
+      setErrorMessage("Invalid email characters");
+    }
+    return setValidEmail(result);
   };
 
   useEffect(() => {
-    if (formErrors) {
-      setSuccess();
-    }
-  }, [formErrors]);
-
-  const handleErrorInput = () => {
-    const regex = /^[^\s@+@[^s@\s@]+\.[^\s@]{2,}$/i;
-    const errors = {};
-
-    if (!name) {
-      errors.name = "name is required!";
-    }
-
-    if (!email) {
-      errors.email = "email is required!";
-    } else if (!regex.test(email)) {
-      errors.email = "This is not a valid email format";
-    }
-
-    if (!password) {
-      errors.password = "password is required!";
-    } else if (!regex.test(password.value < 4)) {
-      errors.password = "Password must be more than 4 characters";
-    }
-
-    if (!occupation) {
-      errors.occupation = "select occupation is required!";
-    }
-
-    if (!state) {
-      errors.state = "select state is required!";
-    }
-    return errors;
-  };
+    emailInput();
+  });
 
   useEffect(() => {
     API.get("/form")
       .then((response) => {
         setOccupation([...response.data.occupations]);
         setState([...response.data.states]);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -101,39 +81,56 @@ function Form() {
           <form className="form" onSubmit={handleSubmit}>
             <label className="label">Full Name</label>
             <input
+              htmlFor="name"
               className="input"
-              name="name"
               type="text"
               placeholder="Full Name"
               ref={inputRef}
+              autoComplete="off"
+              required
               onChange={(e) => setName(e.target.value)}
             />
-            <p className="form-error">{formErrors.name}</p>
             <label className="label">Email</label>
+            <p className="form-error"></p>
             <input
+              htmlFor="email"
               className="input"
               name="email"
               type="text"
               placeholder="Email"
               ref={inputRef}
+              autoComplete="off"
+              required
               onChange={(e) => setEmail(e.target.value)}
+              onFocus={() => setEmailFocus(true)}
+              onBlur={() => setEmailFocus(false)}
             />
-            <p className="form-error">{formErrors.email}</p>
+
+            <p
+              className={
+                emailFocus && email && !validEmail ? "form-error" : "error-off"
+              }
+            >
+              {errorMessage}
+            </p>
             <label className="label">Password</label>
             <input
+              htmlFor="password"
               className="input"
               name="password"
               type="password"
               placeholder="Enter Password"
               ref={inputRef}
+              required
               onChange={(e) => setPassword(e.target.value)}
             />
-            <p className="form-error">{formErrors.password}</p>
+            <p className="form-error"></p>
             <label className="label">Occupation</label>
             <select
               data-testid="occupation"
               name="occupation"
               className="selection"
+              required
               onChange={(e) => setSelectedOccupation(e.target.value)}
             >
               <option defaultValue=""></option>
@@ -147,11 +144,12 @@ function Form() {
                   })
                 : null}
             </select>
-            <p className="form-error">{formErrors.occupation}</p>
+            <p className="form-error"></p>
 
             <label className="label">State</label>
             <select
               className="selection"
+              required
               onChange={(e) => setSelectedState(e.target.value)}
             >
               <option defaultValue=""></option>
@@ -165,7 +163,7 @@ function Form() {
                   })
                 : null}
             </select>
-            <p className="form-error">{formErrors.state}</p>
+            <p className="form-error"></p>
 
             <button className="submit-button" type="submit">
               Sign up
