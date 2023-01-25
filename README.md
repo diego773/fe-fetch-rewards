@@ -36,6 +36,8 @@ Note: We are using Fetch Rewards API https://frontend-take-home.fetchrewards.com
 
 ## GET API request to https://frontend-take-home.fetchrewards.com/form will return a JSON body with the following format:
 
+Status Code:200 for a method get request will return a JSON body with the following format:
+
 - {
   "occupations": [
   "occupation1",
