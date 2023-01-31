@@ -58,22 +58,6 @@ function Form() {
     emailInput();
   });
 
-  // const promise = async () => {
-  //   try {
-  //     return new Promise((resolve) => {
-  //       API.get("/form").then((response) => {
-  //         setOccupation([...response.data.occupations]);
-  //         setState([...response.data.states]);
-  //       });
-  //       resolve(occupation, state);
-  //     }).catch((err) => {
-  //       console.log(err);
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const getOccupation = async () => {
     try {
       API.get("/form")
@@ -203,7 +187,7 @@ function Form() {
               value={selectedState}
               onChange={(e) => setSelectedState(e.target.value)}
             >
-              <option value=""></option>
+              {/* <option value=""></option> */}
               {Array.isArray(state) &&
                 state.map((states) => {
                   return (

@@ -88,7 +88,7 @@ test("occupation selection should be change", () => {
   });
 
   fireEvent.change(occupationElement, {
-    target: { value: "Head of Shrubber" },
+    target: { value: "Head of Shrubbery" },
   });
 
   expect(occupationElement).toBeInTheDocument();
@@ -97,7 +97,7 @@ test("occupation selection should be change", () => {
 test("select state options", async () => {
   render(<Form />);
 
-  const stateElement = screen.getByTestId("states", {
+  const stateElement = screen.getByTestId("state", {
     name: "Alabama",
   });
 
