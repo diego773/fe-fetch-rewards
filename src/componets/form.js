@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./form.css";
 import API from "../api/API";
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const emailRegex = /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/;
 
 function Form() {
   const [name, setName] = useState();
@@ -16,8 +16,8 @@ function Form() {
   const [emailFocus, setEmailFocus] = useState(false);
 
   // Update the selected occupation or selected state
-  const [selectedOccupation, setSelectedOccupation] = useState();
-  const [selectedState, setSelectedState] = useState();
+  const [selectedOccupation, setSelectedOccupation] = useState("");
+  const [selectedState, setSelectedState] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,15 +58,56 @@ function Form() {
     emailInput();
   });
 
+  // const promise = async () => {
+  //   try {
+  //     return new Promise((resolve) => {
+  //       API.get("/form").then((response) => {
+  //         setOccupation([...response.data.occupations]);
+  //         setState([...response.data.states]);
+  //       });
+  //       resolve(occupation, state);
+  //     }).catch((err) => {
+  //       console.log(err);
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const getOccupation = async () => {
+    try {
+      API.get("/form")
+        .then((response) => {
+          setOccupation([...response.data.occupations]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getState = async () => {
+    try {
+      API.get("/form")
+        .then((response) => {
+          setState([...response.data.states]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    API.get("/form")
-      .then((response) => {
-        setOccupation([...response.data.occupations]);
-        setState([...response.data.states]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    getOccupation();
+  }, []);
+
+  useEffect(() => {
+    getState();
   }, []);
 
   return (
@@ -125,43 +166,52 @@ function Form() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <p className="form-error"></p>
-            <label className="label">Occupation</label>
+            <label htmlFor="occupations" className="label">
+              Occupation
+            </label>
             <select
-              data-testid="occupation"
+              data-testid="occupations"
               name="occupation"
               className="selection"
               required
+              value={selectedOccupation}
               onChange={(e) => setSelectedOccupation(e.target.value)}
             >
-              <option defaultValue=""></option>
-              {Array.isArray(occupation)
-                ? occupation.map((occupations) => {
-                    return (
-                      <option key={occupations} value={occupations}>
-                        {occupations}
-                      </option>
-                    );
-                  })
-                : null}
+              <option value=""></option>
+              {Array.isArray(occupation) &&
+                occupation.map((occupations) => {
+                  return (
+                    <option
+                      data-testid="occupations"
+                      key={occupations}
+                      value={occupations}
+                    >
+                      {occupations}
+                    </option>
+                  );
+                })}
             </select>
             <p className="form-error"></p>
-
-            <label className="label">State</label>
+            <label htmlFor="states" className="label">
+              State
+            </label>
             <select
+              data-testid="states"
+              name="state"
               className="selection"
               required
+              value={selectedState}
               onChange={(e) => setSelectedState(e.target.value)}
             >
-              <option defaultValue=""></option>
-              {Array.isArray(state)
-                ? state.map((states) => {
-                    return (
-                      <option key={states.abbreviation} value={states.name}>
-                        {states.name}
-                      </option>
-                    );
-                  })
-                : null}
+              <option value=""></option>
+              {Array.isArray(state) &&
+                state.map((states) => {
+                  return (
+                    <option key={states.abbreviation} value={states.name}>
+                      {states.name}
+                    </option>
+                  );
+                })}
             </select>
             <p className="form-error"></p>
 
